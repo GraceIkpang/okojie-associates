@@ -155,6 +155,35 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
   }
 
+  // Public site: nav inside the .band header, footer after <main>
+  function buildSite() {
+    if (document.body.dataset.area !== 'site') return;
+    var active = document.body.dataset.active;
+    var links = [['home', 'Home', 'home.html'], ['services', 'Services', 'services.html'], ['pricing', 'Pricing', 'pricing.html'], ['about', 'About', 'about.html'], ['contact', 'Contact', 'contact.html']];
+    var nav = '<nav class="snav" aria-label="Primary">' +
+      '<a href="home.html" class="ws"><span class="ws-mark" aria-hidden="true">O</span><span><b>Okojie &amp; Associates</b><small>Okojie Online</small></span></a>' +
+      '<div class="snav-links">' + links.map(function (l) { return '<a href="' + l[2] + '"' + (l[0] === active ? ' aria-current="page"' : '') + '>' + l[1] + '</a>'; }).join('') + '</div>' +
+      '<div class="snav-actions">' + themeBtn() +
+      '<a href="auth-login.html" class="btn btn-secondary hide-m">Client login</a>' +
+      '<a href="contact.html#start" class="btn btn-primary hide-m">Start my return</a>' +
+      '<details class="menu" style="position:relative"><summary class="icon-btn" aria-label="Menu" style="list-style:none">' + ic('menu') + '</summary>' +
+      '<div style="position:absolute;right:0;top:48px;z-index:20;width:220px;padding:6px;border-radius:14px;background:var(--color-surface);box-shadow:var(--shadow-raised);display:grid">' +
+      links.map(function (l) { return '<a class="nav-item" href="' + l[2] + '"' + (l[0] === active ? ' aria-current="page"' : '') + '>' + l[1] + '</a>'; }).join('') +
+      '<a class="nav-item" href="auth-login.html">Client login</a><a class="btn btn-primary" style="margin-top:6px" href="contact.html#start">Start my return</a></div></details>' +
+      '</div></nav>';
+    var band = document.querySelector('.band');
+    if (band) band.insertAdjacentHTML('afterbegin', nav);
+    var foot = '<footer class="sfoot"><div class="sfoot-grid">' +
+      '<div><a href="home.html" class="ws" style="padding:0"><span class="ws-mark" aria-hidden="true">O</span><span><b>Okojie &amp; Associates, Inc.</b><small>Okojie Online</small></span></a>' +
+      '<p>Online filing with a real tax professional who knows Philadelphia and Baltimore. Serving individuals, families and small businesses for 26+ years.</p></div>' +
+      '<div><h4>Explore</h4><ul>' + links.map(function (l) { return '<li><a href="' + l[2] + '">' + l[1] + '</a></li>'; }).join('') + '<li><a href="auth-login.html">Client login</a></li></ul></div>' +
+      '<div><h4>Get in touch</h4><ul><li><a class="num" href="tel:+12155550142">(215) 555-0142</a></li><li><a href="mailto:hello@okojieonline.com">hello@okojieonline.com</a></li><li><a href="contact.html#start">Book a consultation</a></li></ul></div>' +
+      '<div><h4>Offices</h4><ul><li>5601 Germantown Ave<small>Philadelphia, PA</small></li><li>2301 N. Broad St<small>Philadelphia, PA</small></li><li>6300 W. Chelten Ave<small>Philadelphia, PA</small></li><li>4100 Liberty Heights Ave<small>Baltimore, MD</small></li></ul></div>' +
+      '</div><div class="sfoot-bottom"><span>© 2026 Okojie &amp; Associates, Inc.</span><span>' + ic('shield', 'i-sm') + 'IRS Publication 4557 &amp; FTC Safeguards compliant</span>' +
+      '<nav aria-label="Legal"><a href="legal-privacy.html">Privacy policy</a><a href="legal-terms.html">Terms of service</a><a href="legal-security.html">Security (WISP)</a></nav></div></footer>';
+    if (!document.body.hasAttribute('data-no-footer')) document.getElementById('main').insertAdjacentHTML('afterend', foot);
+  }
+
   function themeBtn() {
     return '<button class="icon-btn theme-btn" type="button" aria-label="Switch theme">' + ic('moon', 'ico ico-moon') + ic('sun', 'ico ico-sun') + '</button>';
   }
@@ -248,6 +277,7 @@
 
   function init() {
     buildShell();
+    buildSite();
     bindTheme();
     bindCopy();
     bindInert();

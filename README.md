@@ -11,7 +11,7 @@ Inertia codebase, so they won't run on their own here.
 
 | Path                              | What it is                                                    |
 | --------------------------------- | ------------------------------------------------------------- |
-| `mockups/home.html`               | The homepage mockup, light and dark. Open it in a browser.    |
+| `mockups/`                        | Mockups of every screen, light and dark. Start at `mockups/index.html`. |
 | `resources/js/components/home/`   | Homepage sections: nav, hero, tiers, closing sections and the shared primitives |
 | `resources/css/home.css`          | Homepage design tokens, scoped to `.home[data-theme]`         |
 | `resources/js/hooks/`             | `use-quote-form` and `use-honeypot` for the intake forms      |
